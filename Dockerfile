@@ -10,6 +10,7 @@ RUN apk update && \
     echo "FLUSH PRIVILEGES;" >> /etc/my.cnf.d/init.sql && \
     sed -i "s|skip-networking|init-file=/etc/my.cnf.d/init.sql|" /etc/my.cnf.d/mariadb-server.cnf && \   
     sed -i "s/#bind-address=0.0.0.0/bind-address=0.0.0.0/" /etc/my.cnf.d/mariadb-server.cnf && \     
+    sed -i '/\[mysqld\]/a lower_case_table_names = 1' /etc/my.cnf.d/mariadb-server.cnf && \ 
     mysql_install_db --user=root --datadir=/var/lib/mysql && \
     mkdir -p /run/mysqld/
 EXPOSE 3306 6379
